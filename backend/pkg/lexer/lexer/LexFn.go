@@ -1,6 +1,7 @@
 package lexer
 
 import (
+	"fmt"
 	"unicode"
 	"unicode/utf8"
 
@@ -14,12 +15,14 @@ type LexFn func(*Lexer) LexFn
 */
 func (l *Lexer) Emit(tokenType lexertoken.TokenType, move bool) {
 	// add token to channel
+	fmt.Println("EMITTING -> ", tokenType, l.Input[l.Start:l.Pos])
 	l.Tokens <- lexertoken.Token{Type: tokenType, Value: l.Input[l.Start:l.Pos]}
 	
 	if move {
 		// move the pointer to after the token
 		l.Start = l.Pos
 	}
+	fmt.Println("RETURNING...")
 }
 
 func (l *Lexer) Inc() {
@@ -54,10 +57,11 @@ func (l *Lexer) SkipWhitespace() {
 			l.Emit(lexertoken.TOKEN_EOF, true)
 		}
 	}
+	l.Start = l.Pos
 }
 
 func (l *Lexer) IsEOF() bool {
-	if ch := l.Next(); ch == lexertoken.EOF {
+	if ch := rune(l.Input[l.Pos]); ch == lexertoken.EOF {
 		l.Emit(lexertoken.TOKEN_EOF, true)
 		return true
 	} else {

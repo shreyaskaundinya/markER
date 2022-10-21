@@ -29,6 +29,7 @@ const (
 	// table
 	TOKEN_CREATE
 	TOKEN_TABLE
+	TOKEN_TABLE_NAME
 	TOKEN_TBL_WEAK
 	TOKEN_TBL_STRONG
 
@@ -60,6 +61,7 @@ const (
 	RIGHT_BRACKET        = ")"
 	COMMA                = ","
 	SEMICOLON            = ";"
+	SPACE = " "
 
 	// table
 	CREATE     = "create"

@@ -40,5 +40,5 @@ func LexTable(l *Lexer) LexFn {
 		fmt.Println("TAG: TABLE")
 	}
 
-	return nil
+	return LexTableName
 }

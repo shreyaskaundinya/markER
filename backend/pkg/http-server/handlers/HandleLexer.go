@@ -25,9 +25,15 @@ func HandleLexer(c *gin.Context) {
 	
 	state := lexer.LexBegin
 
-	for state != nil{
+	for state != nil {
 		state = state(lex)
 	}
+
+	close(lex.Tokens)
 	
 	c.JSON(http.StatusAccepted, gin.H{"message": "hello world"})
+	
+	for tok := range lex.Tokens {
+		fmt.Println(tok)
+	}
 }
