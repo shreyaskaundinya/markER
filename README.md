@@ -4,12 +4,12 @@
 Drawing Entity Relation diagrams is a very time taking and tedious task which usually hampers industrial companies who are designing their databases for the first time. We propose a product that can automatically draw ER diagrams based on the user’s specifications, hence eliminating the need for manually drawing the diagrams.
 
 ## Build Status
+The project consists of the following components:
+- Frontend explaining the interface of the project which has a window for typing the code and an output window displaying the ER diagram. 
+- Backend component parsing the code lines using a lexical parser and converting each parsed element into a token.
 
 ## Code Style
-
-
-## Visualisations
-
+Code has to be written in go language in the coding window.
 ## Framework
 
 Frontend:  
@@ -39,4 +39,9 @@ User Environment:
 - compiling code to ER diagram graph
 - importing and exporting code
 - exporting ER diagrams
+
+## Credits
+Useful links:
+- https://adampresley.github.io/2015/05/12/writing-a-lexer-and-parser-in-go-part-2.html
+
 
