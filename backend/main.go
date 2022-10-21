@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	server "go-marker-backend/pkg/http-server"
+	server "github.com/shreyaskaundinya/markER/backend/pkg/http-server"
 )
 
 func main() {
