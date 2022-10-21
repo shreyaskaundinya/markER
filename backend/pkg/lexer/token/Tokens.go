@@ -28,6 +28,7 @@ const (
 
 	// table
 	TOKEN_CREATE
+	TOKEN_TABLE
 	TOKEN_TBL_WEAK
 	TOKEN_TBL_STRONG
 
@@ -62,6 +63,7 @@ const (
 
 	// table
 	CREATE     = "create"
+	TABLE     = "table"
 	TBL_WEAK   = "weak"
 	TBL_STRONG = "strong"
 

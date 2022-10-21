@@ -1,9 +1,8 @@
 package lexer
 
 import (
-	lexertoken "go-marker-backend/pkg/lexer/lexertoken"
+	lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
 )
-
 func BeginLexing(name string, input string) *Lexer {
 	return &Lexer{
 		Name:   name,

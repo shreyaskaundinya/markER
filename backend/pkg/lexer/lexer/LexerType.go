@@ -1,6 +1,6 @@
 package lexer
 
-import lexertoken "go-marker-backend/pkg/lexer/lexertoken"
+import lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
 
 type Lexer struct {
 	Name   string
