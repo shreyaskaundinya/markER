@@ -1,0 +1,9 @@
+
+
+
+
+
+
+create      table Hello {
+    id int,
+}
