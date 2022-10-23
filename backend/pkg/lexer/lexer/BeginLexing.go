@@ -8,7 +8,7 @@ func BeginLexing(name string, input string) *Lexer {
 		Name:   name,
 		Input:  input,
 		State:  LexBegin,
-		Tokens: make(chan lexertoken.Token, 100),
+		Tokens: make(chan lexertoken.Token, 10000),
 	}
 }
 

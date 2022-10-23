@@ -22,7 +22,6 @@ func (l *Lexer) Emit(tokenType lexertoken.TokenType, move bool) {
 		// move the pointer to after the token
 		l.Start = l.Pos
 	}
-	fmt.Println("RETURNING...")
 }
 
 func (l *Lexer) Inc() {

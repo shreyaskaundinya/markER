@@ -1,7 +1,6 @@
 package lexer
 
 import (
-	"fmt"
 	"strings"
 
 	lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
@@ -19,17 +18,14 @@ func LexTable(l *Lexer) LexFn {
 		// table type : WEAK
 		l.Pos += len(lexertoken.TBL_WEAK)
 		l.Emit(lexertoken.TOKEN_TBL_WEAK, true)
-		fmt.Println("TAG: WEAK")
 		
 	} else if (strings.HasPrefix(l.InputToEnd(), lexertoken.TBL_STRONG)) {
 		// table type : STRONG
 		l.Pos += len(lexertoken.TBL_WEAK)
 		l.Emit(lexertoken.TOKEN_TBL_WEAK, true)
-		fmt.Println("TAG: STRONG")
 	} else {
 		// default table type : STRONG
 		l.Emit(lexertoken.TOKEN_TBL_STRONG, false)
-		fmt.Println("TAG: STRONG (default)")
 	}
 
 	l.SkipWhitespace()
@@ -37,7 +33,6 @@ func LexTable(l *Lexer) LexFn {
 	if (strings.HasPrefix(l.InputToEnd(), lexertoken.TABLE)) {
 		l.Pos += len(lexertoken.TABLE)
 		l.Emit(lexertoken.TOKEN_TABLE, true)
-		fmt.Println("TAG: TABLE")
 	}
 
 	return LexTableName
