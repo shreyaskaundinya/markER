@@ -3,6 +3,7 @@ package lexer
 import (
 	"fmt"
 	"strings"
+	"unicode"
 
 	lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
 )

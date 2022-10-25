@@ -7,7 +7,7 @@ import (
 	lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
 )
 
-func LexTable1(l *Lexer) LexFn {
+func LexSemicolon(l *Lexer) LexFn {
 	l.SkipWhitespace()
 
 	if(strings.HasPrefix(l.InputToEnd(), lexertoken.SEMICOLON)) {
