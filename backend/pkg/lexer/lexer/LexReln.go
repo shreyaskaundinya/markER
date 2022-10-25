@@ -1,8 +1,6 @@
 package lexer
 
 import (
-	"fmt"
-
 	lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
 )
 
@@ -11,8 +9,6 @@ import (
 func LexReln(l *Lexer) LexFn {
 	l.Pos += len(lexertoken.RELN)
 	l.Emit(lexertoken.TOKEN_RELN, true)
-
-	fmt.Println("TAG: RELN")
 
 	l.SkipWhitespace()
 	return LexIdentifying

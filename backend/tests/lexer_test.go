@@ -36,7 +36,7 @@ func TestLexer(t *testing.T) {
 		os.Exit(1)
 	}
 
-	b := make([]byte, 1000)
+	b := make([]byte, 2000)
 	f.Read(b)
 	s := string(b[:])
 

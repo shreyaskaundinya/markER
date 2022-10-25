@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"fmt"
+	"strings"
 	"unicode"
 	"unicode/utf8"
 
@@ -16,7 +17,7 @@ type LexFn func(*Lexer) LexFn
 func (l *Lexer) Emit(tokenType lexertoken.TokenType, move bool) {
 	// add token to channel
 	fmt.Println("EMITTING -> ", tokenType, l.Input[l.Start:l.Pos])
-	l.Tokens <- lexertoken.Token{Type: tokenType, Value: l.Input[l.Start:l.Pos]}
+	l.Tokens <- lexertoken.Token{Type: tokenType, Value: strings.TrimSpace(l.Input[l.Start:l.Pos])}
 	
 	if move {
 		// move the pointer to after the token

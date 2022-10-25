@@ -12,7 +12,7 @@ func LexTableBracketClose(l *Lexer) LexFn {
 	if (strings.HasPrefix(l.InputToEnd(), lexertoken.RIGHT_BRACKET)){
 		l.Pos++
 		l.Emit(lexertoken.TOKEN_RIGHT_BRACKET, true)
-		return LexBegin
+		return LexSemicolon
 	}
 
 	// throw error

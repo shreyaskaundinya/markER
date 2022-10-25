@@ -1,8 +1,6 @@
 package lexer
 
 import (
-	"unicode"
-
 	lexertoken "github.com/shreyaskaundinya/markER/backend/pkg/lexer/token"
 )
 
@@ -13,7 +11,8 @@ func LexTable2(l *Lexer) LexFn {
 
 	for {
 		ch = rune(l.Input[l.Pos])
-		if unicode.IsSpace(ch) {
+		// read till semi colon
+		if ch == 59 {
 			l.Emit(lexertoken.TOKEN_TABLE_NAME, true)
 			return LexSemicolon
 		}

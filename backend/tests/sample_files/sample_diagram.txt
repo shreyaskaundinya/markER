@@ -1,9 +1,4 @@
 
-
-
-
-
-
 create      table Hello (
     id             int,
     name    composite (
@@ -49,3 +44,11 @@ create      table TableHehe (
 );
 
 reln identifying Cool (600, 0) 'defines' (M, 1) Hehe;
+
+reln identifying TableHehe (N, 1) 'cool weds TableHehe' (M, 1) Cool;
+
+reln User (M, 0) 'one more is happen' (N, 1) OneMore;
+
+reln Hello (100, 0) 'hehehehehehehhehe' (N, 1) OneMore;
+
+reln Hello (1010, 0) 'hehehehehehehhehe' (1090, 1) Hehe;
