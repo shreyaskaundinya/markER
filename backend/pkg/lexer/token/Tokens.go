@@ -54,6 +54,11 @@ const (
 	// relations
 	TOKEN_RELN
 	TOKEN_IDENTIFYING
+	TOKEN_RELN_NAME
+
+	//cardinality ratio
+	TOKEN_CARDINALITY
+	TOKEN_PARTICIPATION
 )
 
 const (
