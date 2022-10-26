@@ -9,17 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Body struct {
+type LexerBody struct {
 	Code string
 }
 
 func HandleLexer(c *gin.Context) {
-	var response Body
+	var response LexerBody
 	c.Header("Content-Type", "application/json")
 	if err := c.BindJSON(&response); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
+
 	fmt.Println(response.Code)
 	lex := lexer.BeginLexing("Lexer", response.Code)
 	

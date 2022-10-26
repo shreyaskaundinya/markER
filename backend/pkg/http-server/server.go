@@ -11,6 +11,7 @@ func RunServer() {
 
 	r.GET("/ping", handlers.ExampleHandler)
 	r.POST("/lex", handlers.HandleLexer)
+	r.POST("/parse", handlers.HandleParser)
 	
 	r.Run("localhost:5050") 
 }
