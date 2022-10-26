@@ -1,7 +1,6 @@
 package lexer
 
 import (
-	"fmt"
 	"strings"
 	"unicode"
 	"unicode/utf8"
@@ -16,7 +15,7 @@ type LexFn func(*Lexer) LexFn
 */
 func (l *Lexer) Emit(tokenType lexertoken.TokenType, move bool) {
 	// add token to channel
-	fmt.Println("EMITTING -> ", tokenType, l.Input[l.Start:l.Pos])
+	// println("EMITTING -> ", tokenType, l.Input[l.Start:l.Pos])
 	l.Tokens <- lexertoken.Token{Type: tokenType, Value: strings.TrimSpace(l.Input[l.Start:l.Pos])}
 	
 	if move {
@@ -66,5 +65,16 @@ func (l *Lexer) IsEOF() bool {
 		return true
 	} else {
 		return false;
+	}
+}
+
+func (l *Lexer) NextToken() lexertoken.Token {
+	for {
+		select {
+		case token := <-l.Tokens:
+			return token
+		default:
+			l.State = l.State(l)
+		}
 	}
 }

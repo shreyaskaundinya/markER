@@ -7,6 +7,7 @@ import (
 )
 
 func LexTableBracketClose(l *Lexer) LexFn {
+	l.Emit(lexertoken.TOKEN_COMMA, true)
 	l.SkipWhitespace()
 
 	if (strings.HasPrefix(l.InputToEnd(), lexertoken.RIGHT_BRACKET)){
