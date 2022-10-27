@@ -92,6 +92,7 @@ const (
 	PROP_NOTNULL = "notnull"
 	PROP_UNIQUE  = "unique"
 	PROP_MULVAL  = "multivalue"
+	PROP_DERIVED = "derived"
 
 	// relations
 	RELN        = "reln"
