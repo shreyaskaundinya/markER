@@ -56,7 +56,8 @@ func LexAttributeType(l *Lexer) LexFn {
 	if token > 0 {
 		l.Emit(token, true)
 		// TODO : LexAttributeProperties
-		return LexAttributeComma
+		//return LexAttributeComma
+		return LexAttributeProps
 	} else {
 		// throw error
 		return nil
