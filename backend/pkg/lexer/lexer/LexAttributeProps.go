@@ -11,6 +11,11 @@ func LexAttributeProps(l *Lexer) LexFn {
 
 	inp := l.InputToEnd()
 
+	if (strings.HasPrefix(inp, lexertoken.PROP_DERIVED)){
+		l.Pos += len(lexertoken.PROP_DERIVED)
+		l.Emit(lexertoken.TOKEN_PROP_DERIVED)
+		fmt.Println("TAG: DERIVED KEY")
+
 	if (strings.HasPrefix(inp, lexertoken.PROP_FK)){
 		l.Pos += len(lexertoken.PROP_FK)
 		l.Emit(lexertoken.TOKEN_PROP_FK)
