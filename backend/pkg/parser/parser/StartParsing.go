@@ -14,6 +14,7 @@ func StartParsing(input string) model.Out {
 	
 	output := model.Out{
 		Tables: make([]model.Table, 0),
+		Relations: make([]model.Relation, 0),
 	}
 	
 	l := lexer.BeginLexing("Untitled", input)
@@ -25,6 +26,7 @@ func StartParsing(input string) model.Out {
 
 	var table model.Table
 	var attr model.Attr
+	var reln model.Relation
 	// var compAttr model.CompAttr
 
 	var context Context
@@ -43,7 +45,6 @@ func StartParsing(input string) model.Out {
 		switch token.Type {
 			// Table : creation
 			case lexertoken.TOKEN_CREATE:
-				// fmt.Println("Creating table")
 				// reset table to create a new table and push context of table
 				table = model.Table{
 					Attributes: make([]model.Attr, 0),
@@ -55,19 +56,22 @@ func StartParsing(input string) model.Out {
 			// Table : Type
 			case lexertoken.TOKEN_TBL_WEAK:			
 			case lexertoken.TOKEN_TBL_STRONG:
-				// fmt.Println("Setting table type", token.Type, tokenValue)
 				// set table type
 				table.Type = tokenValue
 				
 		
-			// Table : name
+			// Table and Relation's Table: name
 			case lexertoken.TOKEN_TABLE_NAME:
 				currentContext = context.GetCurrentContext()
 
 				switch currentContext {
 					case CONTEXT_TABLE:
-						// fmt.Println("Setting table name", tokenValue)
 						table.Name = tokenValue
+					case CONTEXT_RELN_TABLE1:
+						reln.Table1 = tokenValue
+					case CONTEXT_RELN_TABLE2:
+						reln.Table2 = tokenValue
+						context.Pop()
 				}
 				
 
@@ -120,7 +124,51 @@ func StartParsing(input string) model.Out {
 
 			case lexertoken.TOKEN_PROP_DERIVED:
 				attr.Properties.Derived = true
-				
+			
+			
+			// Relation : Create
+			case lexertoken.TOKEN_RELN:
+				fmt.Println("Creating Relation...")
+				context.Push(CONTEXT_RELN)
+				context.Push(CONTEXT_RELN_TABLE1)
+				reln = model.Relation{
+					Identifying: false,
+				}
+			
+			// Relation : Identifying
+			case lexertoken.TOKEN_IDENTIFYING:
+				reln.Identifying = true
+			
+			
+			// Relation : Cardinality
+			case lexertoken.TOKEN_CARDINALITY:
+				currentContext = context.GetCurrentContext()
+
+				switch currentContext {
+					case CONTEXT_RELN_TABLE1:
+						reln.Cardinality1 = tokenValue
+					case CONTEXT_RELN_TABLE2:
+						reln.Cardinality2 = tokenValue
+				}
+			
+			// Relation : Participation
+			case lexertoken.TOKEN_PARTICIPATION:
+				currentContext = context.GetCurrentContext()
+
+				switch currentContext {
+					case CONTEXT_RELN_TABLE1:
+						reln.Participation1 = tokenValue
+					case CONTEXT_RELN_TABLE2:
+						reln.Participation2 = tokenValue
+				}
+			
+			// Relation : Name
+			case lexertoken.TOKEN_RELN_NAME:
+				reln.Name = tokenValue
+				// pop table 1 context
+				context.Pop()
+				// push table 2 context
+				context.Push(CONTEXT_RELN_TABLE2)
 
 			// Attribute : End
 			case lexertoken.TOKEN_COMMA:
@@ -155,6 +203,9 @@ func StartParsing(input string) model.Out {
 					case CONTEXT_TABLE:
 						output.Tables = append(output.Tables, table)
 						// reset table
+						context.Pop()
+					case CONTEXT_RELN:
+						output.Relations = append(output.Relations, reln)
 						context.Pop()
 				}
 			

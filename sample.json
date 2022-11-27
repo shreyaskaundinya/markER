@@ -1,0 +1,114 @@
+{
+    "tables": [
+        {
+            "name": "User",
+            "type": "",
+            "attr": [
+                {
+                    "name": "id",
+                    "datatype": "int",
+                    "properties": {
+                        "primaryKey": true,
+                        "foreignKey": false,
+                        "notNull": true,
+                        "unique": true,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                },
+                {
+                    "name": "username",
+                    "datatype": "varchar",
+                    "properties": {
+                        "primaryKey": false,
+                        "foreignKey": false,
+                        "notNull": false,
+                        "unique": false,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                },
+                {
+                    "name": "password",
+                    "datatype": "varchar",
+                    "properties": {
+                        "primaryKey": false,
+                        "foreignKey": false,
+                        "notNull": false,
+                        "unique": false,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                },
+                {
+                    "name": "created_at",
+                    "datatype": "timestamp",
+                    "properties": {
+                        "primaryKey": false,
+                        "foreignKey": false,
+                        "notNull": false,
+                        "unique": false,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                }
+            ],
+            "compositeAttr": []
+        },
+        {
+            "name": "Project",
+            "type": "",
+            "attr": [
+                {
+                    "name": "id",
+                    "datatype": "int",
+                    "properties": {
+                        "primaryKey": true,
+                        "foreignKey": false,
+                        "notNull": true,
+                        "unique": true,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                },
+                {
+                    "name": "name",
+                    "datatype": "varchar",
+                    "properties": {
+                        "primaryKey": false,
+                        "foreignKey": false,
+                        "notNull": false,
+                        "unique": true,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                },
+                {
+                    "name": "created_at",
+                    "datatype": "timestamp",
+                    "properties": {
+                        "primaryKey": false,
+                        "foreignKey": false,
+                        "notNull": false,
+                        "unique": false,
+                        "multivalue": false,
+                        "derived": false
+                    }
+                }
+            ],
+            "compositeAttr": []
+        }
+    ],
+    "relations": [
+        {
+            "name": "Has",
+            "cardinality1": "M",
+            "cardinality2": "N",
+            "participation1": "1",
+            "participation2": "1",
+            "table1": "User",
+            "table2": "Project",
+            "identifying": false
+        }
+    ]
+}

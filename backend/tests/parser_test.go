@@ -15,7 +15,7 @@ func TestParser(t *testing.T) {
 	fmt.Println("TESTING PARSER")
 	requestUrl := "http://localhost:5050/parse"
 
-	f, err := os.Open("./sample_files/sample_diagram.txt")
+	f, err := os.Open("./sample_files/sample_simple_diagram.txt")
 	
 	if err != nil {
 		fmt.Printf("error opening file: %s\n", err)

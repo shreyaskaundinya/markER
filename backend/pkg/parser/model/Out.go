@@ -1,7 +1,8 @@
 package model
 
 type Out struct {
-	Tables []Table `json:"tables"`
+	Tables    []Table    `json:"tables"`
+	Relations []Relation `json:"relations"`
 }
 
 /*
