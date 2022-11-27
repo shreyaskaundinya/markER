@@ -70,24 +70,27 @@ export function Edit2() {
     <>
     <br/>
     <div class="edit space-x-3 pl-5">
-    <button class="btn btn-success" onClick={showValue}>Show value</button>
-    <button class="btn btn-success" onClick={exportData}> download value</button>
-    <button class="btn btn-success" onClick={clear}> Clear value</button>
+    <button class="btn btn-success" onClick={clear}> Clear Editor</button>
+    <button class="btn btn-success" onClick={showValue}>Compile Code</button>
+    <button class="btn btn-success" onClick={exportData}> Download Code</button>
+    
     </div>
     <br/>
-    
-   <Editor  
-     height="50vh"
+    <div class="rounded-1xl border-solid border-2 border-green-500 ">
+   <Editor
+    height="50vh"
      defaultLanguage="sql"
     //  beforeMount={handleEditorWillMount}
      defaultValue="-- Write ur code below "
      theme = "vs-dark"
      onMount={handleEditorDidMount}
    />
+   </div>
    <br/>
-   <input type="file" class="pl-5" onChange={onFileChange} />
-    <button class="btn btn-success" onClick={importData}> upload value</button>
-    
+   <div class="edit space-x-3 pl-3">
+   <input type="file" class="file-input file-input-bordered file-input-success w-full max-w-xs" onChange={onFileChange}/>
+    <button class="btn btn-success" onClick={importData}> Upload Code</button>
+    </div>
    </>
   );
 }

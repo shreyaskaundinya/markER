@@ -1,6 +1,6 @@
 export default function Graph(){
     return(
-        <div>
+        <div class="font-serif text-xl font-bold">
             Graph
         </div>
     )
