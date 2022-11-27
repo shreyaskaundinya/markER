@@ -1,0 +1,39 @@
+
+.header{
+  color: lightblue;
+  font-size:4rem;
+  text-align:center;
+}
+
+.sep{
+  display: flex;
+flex-direction: row;
+padding : 10px;
+height:85vh;
+}
+
+.code{
+  width:40%;
+  height:100%;
+  background: indigo;
+  margin-right:10px;
+}
+
+.right{
+  width:60%;
+  height: 100%;
+  background: indigo;
+  display:flex;
+  flex-direction:column;
+}
+
+.console{
+  flex:1;
+}
+.graph{
+  flex:4
+}
+
+.cons{
+  
+}
