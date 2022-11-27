@@ -7,6 +7,7 @@ require github.com/gin-gonic/gin v1.8.1
 require (
 	github.com/canthefason/go-watcher v0.2.4 // indirect
 	github.com/fatih/color v1.13.0 // indirect
+	github.com/gin-contrib/cors v1.4.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect

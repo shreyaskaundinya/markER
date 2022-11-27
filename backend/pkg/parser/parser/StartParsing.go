@@ -18,21 +18,25 @@ func StartParsing(input string) model.Out {
 	}
 	
 	l := lexer.BeginLexing("Untitled", input)
-	fmt.Println("Created instance of lexer...")
+	// fmt.Println("Created instance of lexer...")
 
 	var token lexertoken.Token
 	var tokenValue string
 
 
 	var table model.Table
+	var attrName string
 	var attr model.Attr
 	var reln model.Relation
+	var compAttr model.CompAttr
+	var compSubAttr model.CompSubAttr
 	// var compAttr model.CompAttr
 
 	var context Context
 	var currentContext int
 
 	for {
+		// fmt.Println(context)
 		token = l.NextToken()
 		
 		if token.Type == lexertoken.TOKEN_EOF {
@@ -45,12 +49,13 @@ func StartParsing(input string) model.Out {
 		switch token.Type {
 			// Table : creation
 			case lexertoken.TOKEN_CREATE:
-				// reset table to create a new table and push context of table
-				table = model.Table{
-					Attributes: make([]model.Attr, 0),
-					CompAttributes: make([]model.CompAttr, 0),
-				}
-				context.Push(CONTEXT_TABLE)
+					fmt.Println("Creating table...")
+					// reset table to create a new table and push context of table
+					table = model.Table{
+						Attributes: make([]model.Attr, 0),
+						CompAttributes: make([]model.CompAttr, 0),
+					}
+					context.Push(CONTEXT_TABLE)
 				
 
 			// Table : Type
@@ -77,11 +82,8 @@ func StartParsing(input string) model.Out {
 
 			// Attribute : Name
 			case lexertoken.TOKEN_ATTR_NAME:
-				// fmt.Println("Creating attribute", tokenValue)
-				// reset attribute and set name
-				context.Push(CONTEXT_ATTR)
-				attr = model.Attr{}
-				attr.Name = tokenValue
+				// set name
+				attrName = tokenValue
 				
 
 			// Attribute : Datatype
@@ -92,11 +94,36 @@ func StartParsing(input string) model.Out {
 				lexertoken.TOKEN_DTYPE_DATETIME, 
 				lexertoken.TOKEN_DTYPE_DATE, 
 				lexertoken.TOKEN_DTYPE_BOOL, 
-				lexertoken.TOKEN_DTYPE_COMPOSITE, 
 				lexertoken.TOKEN_DTYPE_VARCHAR:
-				// fmt.Println("Setting type for attribute", tokenValue)
-				attr.DataType = tokenValue
-				attr.Properties = model.Prop{}
+				currentContext = context.GetCurrentContext()
+
+				if currentContext == CONTEXT_COMP_ATTR {
+					compSubAttr = model.CompSubAttr{
+						Name: attrName,
+						DataType: tokenValue,
+					}
+					context.Push(CONTEXT_COMP_SUB_ATTR)
+				} else {
+					// setup attribute
+					context.Push(CONTEXT_ATTR)
+					attr = model.Attr{
+						Name: attrName,
+						DataType: tokenValue,
+						Properties: model.Prop{},
+					}
+					attrName = ""
+				}
+
+				
+			// Composite Attribute : Create
+			case lexertoken.TOKEN_DTYPE_COMPOSITE:
+				fmt.Println("Creating composite attr", attrName)
+				context.Push(CONTEXT_COMP_ATTR)
+				compAttr = model.CompAttr{
+					Name: attrName,
+					Attributes: make([]model.CompSubAttr, 0),
+				}
+				attrName = "" 
 				
 
 			// Attribute : Properties
@@ -180,19 +207,48 @@ func StartParsing(input string) model.Out {
 						// fmt.Println("Appending attribute", attr)
 						table.Attributes = append(table.Attributes, attr)
 						context.Pop()
+					case CONTEXT_COMP_SUB_ATTR:
+						// fmt.Println("Closing Sub Attr", compSubAttr.Name)
+						compAttr.Attributes = append(compAttr.Attributes, compSubAttr)
+						context.Pop()
+					case CONTEXT_COMP_ATTR:
+						// fmt.Println("Closing Comp Attr", compAttr.Name)
+						table.CompAttributes = append(table.CompAttributes, compAttr)
+						context.Pop()
 				}
 				
 			
+			case lexertoken.TOKEN_RIGHT_BRACKET:
+				// fmt.Println("Right bracket here")
+				currentContext = context.GetCurrentContext()
+
+				if currentContext == CONTEXT_COMP_SUB_ATTR {
+					compAttr.Attributes = append(compAttr.Attributes, compSubAttr)
+					context.Pop()
+				}
+				
+				if currentContext == CONTEXT_COMP_ATTR {
+					// fmt.Println("Closing Comp Attr")
+					table.CompAttributes = append(table.CompAttributes, compAttr)
+					context.Pop()
+				}
+
 			// Table : end
 			// Reln : end
 			case lexertoken.TOKEN_SEMICOLON:
 				currentContext = context.GetCurrentContext()
-				// fmt.Println("Encountered semicolon...")
-				// fmt.Println("Current context", currentContext)
+				fmt.Println("Encountered semicolon...")
+				fmt.Println("Current context", currentContext)
 				
 				// final attribute push
 				if currentContext == CONTEXT_ATTR {
 					table.Attributes = append(table.Attributes, attr)
+					context.Pop()
+				} else if currentContext == CONTEXT_COMP_SUB_ATTR {
+					compAttr.Attributes = append(compAttr.Attributes, compSubAttr)
+					context.Pop()
+				} else if currentContext == CONTEXT_COMP_ATTR{
+					table.CompAttributes = append(table.CompAttributes, compAttr)
 					context.Pop()
 				}
 				

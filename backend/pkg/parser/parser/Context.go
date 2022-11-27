@@ -1,12 +1,14 @@
 package parser
 
 const (
-	CONTEXT_TABLE = iota
-	CONTEXT_RELN
-	CONTEXT_RELN_TABLE1
-	CONTEXT_RELN_TABLE2
-	CONTEXT_COMMENT
-	CONTEXT_ATTR
+	CONTEXT_TABLE         = iota // 0
+	CONTEXT_RELN                 // 1
+	CONTEXT_RELN_TABLE1          // 2
+	CONTEXT_RELN_TABLE2          // 3
+	CONTEXT_COMMENT              // 4
+	CONTEXT_ATTR                 // 5
+	CONTEXT_COMP_ATTR            // 6
+	CONTEXT_COMP_SUB_ATTR        // 7
 )
 
 type Context struct {

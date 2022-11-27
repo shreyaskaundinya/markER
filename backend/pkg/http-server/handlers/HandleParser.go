@@ -26,9 +26,10 @@ func HandleParser(c *gin.Context) {
 
 	out := parser.StartParsing(response.Code)
 	
-	json, _ := json.Marshal(out)
+	json, _ := json.MarshalIndent(out, "", " ")
+	// json, _ := json.Marshal(out)
 
-	fmt.Println(string(json))
+	// fmt.Println(string(json))
 	
-	c.JSON(http.StatusAccepted, gin.H{"message": "hello world"})
+	c.JSON(http.StatusAccepted, gin.H{"data": string(json)})
 }

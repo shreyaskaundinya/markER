@@ -47,19 +47,23 @@ func (l *Lexer) InputToEnd() string {
 
 func (l *Lexer) SkipWhitespace() {
 	for {
+		if l.IsEOF() {
+			l.Emit(lexertoken.TOKEN_EOF, true)
+			return
+		}
 		ch := l.Next()
-		if !unicode.IsSpace(ch) {
+		if (!unicode.IsSpace(ch)) {
 			l.Dec()
 			break
-		}
-		if ch == lexertoken.EOF {
-			l.Emit(lexertoken.TOKEN_EOF, true)
 		}
 	}
 	l.Start = l.Pos
 }
 
 func (l *Lexer) IsEOF() bool {
+	if l.Pos >= len(l.Input) {
+		return true
+	}
 	if ch := rune(l.Input[l.Pos]); ch == lexertoken.EOF {
 		l.Emit(lexertoken.TOKEN_EOF, true)
 		return true
