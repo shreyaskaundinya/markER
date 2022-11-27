@@ -1,0 +1,6 @@
+-- Enter ur code below
+create table gods{
+    id int;
+    name varchar(100);
+}
+insert into gods values (1,"god1");
