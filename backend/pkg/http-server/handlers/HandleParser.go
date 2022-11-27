@@ -11,7 +11,7 @@ import (
 )
 
 type ParserBody struct {
-	Code string
+	Code string `json:"code"`
 }
 
 func HandleParser(c *gin.Context) {

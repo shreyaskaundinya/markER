@@ -1,5 +1,27 @@
 
-create      table Hello (
+create table Hello (
+    id int derived fk pk multivalue notnull unique,
+    name    composite (
+        fname varchar,
+        lname varchar
+    )
+);
+
+create table User (
+    id             int pk,
+    username varchar,
+    password varchar,
+    created_at timestamp
+);
+
+create table Hehe (
+    id             int,
+    username varchar,
+    password varchar,
+    created_at timestamp
+);
+
+create table OneMore (
     id             int,
     name    composite (
         fname varchar,
@@ -7,36 +29,14 @@ create      table Hello (
     )
 );
 
-create      table User (
+create table Cool (
     id             int,
     username varchar,
     password varchar,
     created_at timestamp
 );
 
-create      table Hehe (
-    id             int,
-    username varchar,
-    password varchar,
-    created_at timestamp
-);
-
-create      table OneMore (
-    id             int,
-    name    composite (
-        fname varchar,
-        lname varchar
-    )
-);
-
-create      table Cool (
-    id             int,
-    username varchar,
-    password varchar,
-    created_at timestamp
-);
-
-create      table TableHehe (
+create table TableHehe (
     id             int,
     username varchar,
     password varchar,
