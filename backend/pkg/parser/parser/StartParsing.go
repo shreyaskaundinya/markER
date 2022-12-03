@@ -59,10 +59,12 @@ func StartParsing(input string) model.Out {
 				
 
 			// Table : Type
-			case lexertoken.TOKEN_TBL_WEAK:			
+			case lexertoken.TOKEN_TBL_WEAK:
+				table.Type = "weak"	
 			case lexertoken.TOKEN_TBL_STRONG:
+				fmt.Println("Setting table type : ", tokenValue)
 				// set table type
-				table.Type = tokenValue
+				table.Type = "strong"
 				
 		
 			// Table and Relation's Table: name

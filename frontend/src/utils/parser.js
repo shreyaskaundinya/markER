@@ -21,6 +21,7 @@ function ParseER(er) {
         nodes.push(
             wrap({
                 id: table_id,
+                tableType: t.type,
                 table: true,
                 label: table_name,
             })
@@ -37,10 +38,12 @@ function ParseER(er) {
                     id: attr_id,
                     attr: true,
                     label: a.name,
-                    primary_key: a['primary_key'],
-                    unique: a['unique'],
-                    derived: a['derived'],
-                    multival: a['multival'],
+                    primaryKey: a.properties.primaryKey ? 'true' : 'false',
+                    foreignKey: a.properties.foreignKey ? 'true' : 'false',
+                    unique: a.properties.unique ? 'true' : 'false',
+                    notNull: a.properties.notNull ? 'true' : 'false',
+                    derived: a.properties.derived ? 'true' : 'false',
+                    multivalue: a.properties.multivalue ? 'true' : 'false',
                 })
             );
 
@@ -99,10 +102,12 @@ function ParseER(er) {
     // relations
     relations.forEach((r) => {
         let reln_id = `relation_${r.name}`;
+
         nodes.push(
             wrap({
                 id: reln_id,
                 reln: true,
+                isIdentifying: r.identifying ? 'true' : 'false',
                 label: r.name,
             })
         );
@@ -116,6 +121,7 @@ function ParseER(er) {
                 id: `e_${edge_count}`,
                 source: source_table_id,
                 target: reln_id,
+                cardinality: `(${r.cardinality1}, ${r.participation1})`,
             })
         );
 
@@ -125,6 +131,7 @@ function ParseER(er) {
                 id: `e_${edge_count}`,
                 source: reln_id,
                 target: dest_table_id,
+                cardinality: `(${r.cardinality1}, ${r.participation1})`,
             })
         );
     });

@@ -29,7 +29,7 @@ func HandleParser(c *gin.Context) {
 	json, _ := json.MarshalIndent(out, "", " ")
 	// json, _ := json.Marshal(out)
 
-	// fmt.Println(string(json))
+	fmt.Println(string(json))
 	
 	c.JSON(http.StatusAccepted, gin.H{"data": string(json)})
 }
